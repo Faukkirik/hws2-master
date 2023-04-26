@@ -25,6 +25,14 @@ html {
     border-radius: 2px;
     color: black;
 }
+.selectBlue {
+    width: 171px;
+    height: 36px;
+    border: 1px solid #323232;
+    border-radius: 2px;
+    color: black;
+    background-color: #DDEEFF;
+}
 .selectDark {
     width: 171px;
     height: 36px;
