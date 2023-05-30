@@ -30,7 +30,7 @@ type ParamsType = {
 const getTechs = (params: ParamsType) => {
     return axios
         .get<{ techs: TechType[], totalCount: number }>(
-            'https://incubator-personal-page-back.herokuapp.com/api/3.0/homework/test3',
+            'https://samurai.it-incubator.io/api/3.0/homework/test3',
             {params}
         )
         .catch((e) => {
@@ -48,38 +48,52 @@ const HW15 = () => {
     const [techs, setTechs] = useState<TechType[]>([])
 
     const sendQuery = (params: any) => {
+        //debugger
         setLoading(true)
         getTechs(params)
             .then((res) => {
                 // делает студент
-
                 // сохранить пришедшие данные
-
+                if (res) {
+                    setTechs(res.data.techs)
+                    setTotalCount(res.data.totalCount)
+                }
+                setLoading(false)
                 //
             })
     }
 
     const onChangePagination = (newPage: number, newCount: number) => {
         // делает студент
-
         // setPage(
         // setCount(
-
+        setPage(newPage)
+        setCount(newCount)
+        const pageQuery: { page?: string } = newPage !== 1 ? {page: newPage + ''} : {}
+        const countQuery: { count?: string } = newCount !== 4 ? {count: newCount + ''} : {}
+        const {count, page, ...lastQueries} = Object.fromEntries(searchParams)
         // sendQuery(
         // setSearchParams(
-
+        const allQuery = {...lastQueries, ...pageQuery, ...countQuery}
+        sendQuery(allQuery)
+        setSearchParams(allQuery)
         //
     }
 
     const onChangeSort = (newSort: string) => {
+        debugger
         // делает студент
-
+        setSort(newSort)
+        setPage(1)
         // setSort(
         // setPage(1) // при сортировке сбрасывать на 1 страницу
-
+        const sortQuery: { sort?: string } = newSort !== '' ? {sort: newSort} : {}
+        const {sort, page, ...lastQueries} = Object.fromEntries(searchParams)
+        const allQuery = {...lastQueries, ...sortQuery}
         // sendQuery(
         // setSearchParams(
-
+        sendQuery(allQuery)
+        setSearchParams(allQuery)
         //
     }
 
